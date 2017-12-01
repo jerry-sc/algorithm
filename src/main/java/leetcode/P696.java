@@ -10,6 +10,7 @@ public class P696 {
         for (int i=0;i<s.length()-1;++i) {
             int tmp = 1;
             int j=i+1;
+
             for (;j<s.length();++j) {
                 if (s.charAt(j) == s.charAt(i) && s.charAt(j) == s.charAt(j-1)) {
                     ++tmp;
