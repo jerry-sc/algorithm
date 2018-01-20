@@ -28,4 +28,9 @@ public class P696Test {
         assertEquals(4, p696.countBinarySubstrings("10101"));
     }
 
+    @Test
+    public void test4() {
+        assertEquals(6, p696.countBinarySubstrings("000111000"));
+    }
+
 }

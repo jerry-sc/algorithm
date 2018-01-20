@@ -15,9 +15,8 @@ public class P696 {
             if (s.charAt(i) == s.charAt(i-1)) {
                 ++count;
                 --pre;
-                if (pre == 0) ++sum;
+                if (pre >= 0) ++sum;
             } else {
-                if (pre > 0) ++sum;
                 ++sum;
                 pre = count-1;
                 count = 1;
