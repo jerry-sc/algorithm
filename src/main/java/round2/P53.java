@@ -8,6 +8,6 @@ package round2;
 public class P53 {
 
     public int maxSubArray(int[] nums) {
-
+        return 1;
     }
 }
