@@ -20,9 +20,8 @@ public class P437 {
     }
 
     private void preOrder(TreeNode root, int total) {
-        if (root.left == null && root.right == null) {
-            if (total + root.val == goal) ++res;
-        }
+        if (root == null)   return;
+        if (total + root.val == goal) ++res;
         if (root.left != null)  preOrder(root.left, total + root.val);
         if (root.right != null)  preOrder(root.right, total + root.val);
     }
