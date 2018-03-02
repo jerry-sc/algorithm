@@ -12,19 +12,20 @@ import java.util.Set;
  */
 public class P205 {
     public boolean isIsomorphic(String s, String t) {
-        Map<Character, Character> map = new HashMap<>(); // map to other
-        Set<Character> set = new HashSet<>();    // map to itself
+        Map<Character, Character> map = new HashMap<>();
+        Map<Character, Character> other = new HashMap<>();
         for (int i = 0; i < s.length(); ++i) {
             char first = map.get(s.charAt(i)) == null ? s.charAt(i) : map.get(s.charAt(i));
             char last = t.charAt(i);
             if (first != last) {
-                if (map.get(first) != null) {
-                    return false;
-                }
-                if (set.contains(last) || set.contains(first)) return false;
+                if (map.get(s.charAt(i)) != null || other.get(last) != null) return false;
                 map.put(first, last);
+                other.put(last, first);
             } else {
-                set.add(first);
+                if (map.get(s.charAt(i)) == null) {
+                    map.put(first, first);
+                    other.put(first, first);
+                }
             }
         }
         return true;
