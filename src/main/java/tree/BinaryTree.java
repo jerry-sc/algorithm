@@ -2,6 +2,7 @@ package tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinaryTree {
 
@@ -57,6 +58,37 @@ public class BinaryTree {
     }
 
     /**
+     * 先序遍历非递归实现
+     * @param root root
+     */
+    private void preOrderWithStack(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        if (root == null) return;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            System.out.println(node.val);
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+        }
+    }
+
+    private void preOrderWithStack1(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                System.out.println(node.val);
+                stack.push(node);
+                node = node.left;
+            } else {
+                node = stack.pop();
+                node = node.right;
+            }
+        }
+    }
+
+    /**
      * 中序遍历
      *
      * @param root root node
@@ -68,6 +100,21 @@ public class BinaryTree {
         inOrder(root.left);
         System.out.println(root.val);
         inOrder(root.right);
+    }
+
+    private void inOrderWithStack(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            } else {
+                node = stack.pop();
+                System.out.println(node.val);
+                node = node.right;
+            }
+        }
     }
 
     /**
@@ -82,6 +129,46 @@ public class BinaryTree {
         postOrder(root.left);
         postOrder(root.right);
         System.out.println(root.val);
+    }
+
+    private void postOrderWithStack1(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<TreeNode> output = new Stack<>();
+        TreeNode node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                output.push(node);
+                node = node.right;
+            } else {
+                node = stack.pop();
+                node = node.left;
+            }
+        }
+        while (!output.isEmpty()) {
+            System.out.println(output.pop().val);
+        }
+    }
+
+    private void postOrderWithStack2(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root, prev = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            } else {
+                TreeNode tmp = stack.peek().right;
+                if (tmp == null || tmp == prev) {
+                    node = stack.pop();
+                    System.out.println(node.val);
+                    prev = node;
+                    node = null;
+                } else {
+                    node = tmp;
+                }
+            }
+        }
     }
 
     /**
