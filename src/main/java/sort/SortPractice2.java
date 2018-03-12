@@ -24,7 +24,7 @@ public class SortPractice2 {
         if (low < high) {
             int partition = partition(arr, low, high);
             quickSort(arr, low, partition - 1);
-            quickSort(arr, partition +1, high);
+            quickSort(arr, partition + 1, high);
         }
     }
 
@@ -40,7 +40,7 @@ public class SortPractice2 {
             }
             arr[high] = arr[low];
         }
-        arr[low] =  pivot;
+        arr[low] = pivot;
         return low;
     }
 
@@ -61,32 +61,41 @@ public class SortPractice2 {
         int mid = low + (high - low) / 2;
         mergingSort(arr, low, mid);
         mergingSort(arr, mid + 1, high);
-
         merge(arr, low, mid, high);
-        System.out.println(Arrays.toString(arr));
     }
 
     private static void merge(int[] arr, int low, int mid, int high) {
         int[] tmp = new int[high - low + 1];
-        int mark = low;
-        int j = mid + 1;
-        int i = 0;
-        while (low <= mid && j <= high) {
-            if (arr[low] <= arr[j]) {
-                tmp[i++] = arr[low++];
+        int r = mid + 1;
+        int ind = 0;
+        int i = low;
+        while (low <= mid && r <= high) {
+            if (arr[low] <= arr[r]) {
+                tmp[ind++] = arr[low++];
             } else {
-                tmp[i++] = arr[j++];
+                tmp[ind++] = arr[r++];
             }
         }
-        while (low <= mid) {
-            tmp[i++] = arr[low++];
-        }
-        while (j <= high) {
-            tmp[i++] = arr[j++];
-        }
-        int l = 0;
-        while (l < tmp.length) {
-            arr[mark++] = tmp[l++];
+        while (low <= mid) tmp[ind++] = arr[low++];
+        while (r <= high) tmp[ind++] = arr[r++];
+        ind = 0;
+        while (i <= high) {
+            arr[i++] = tmp[ind++];
         }
     }
+
+    public static int findKMax(int[] arr, int low, int high, int k) {
+        if (low < high) {
+            int partition = partition(arr, low, high);
+            if (partition > k) {
+                findKMax(arr, low, partition - 1, k);
+            } else if (partition < k) {
+                findKMax(arr, partition + 1, high, k);
+            } else {
+                return arr[partition];
+            }
+        }
+        return -1;
+    }
+
 }
