@@ -24,23 +24,23 @@ public class SortPractice2 {
         if (low < high) {
             int partition = partition(arr, low, high);
             quickSort(arr, low, partition - 1);
-            quickSort(arr, partition +1, high);
+            quickSort(arr, partition + 1, high);
         }
     }
 
     private static int partition(int[] arr, int low, int high) {
         int pivot = arr[low];
         while (low < high) {
-            while (low < high && pivot <= arr[high]) {
+            while (low < high && arr[high] >= pivot) {
                 --high;
             }
             arr[low] = arr[high];
-            while (low < high && pivot >= arr[low]) {
+            while (low < high && arr[low] <= pivot) {
                 ++low;
             }
             arr[high] = arr[low];
         }
-        arr[low] =  pivot;
+        arr[low] = pivot;
         return low;
     }
 
@@ -59,34 +59,48 @@ public class SortPractice2 {
     private static void mergingSort(int[] arr, int low, int high) {
         if (low >= high) return;
         int mid = low + (high - low) / 2;
-        mergingSort(arr, low, mid);
+        mergingSort(arr, 0, mid);
         mergingSort(arr, mid + 1, high);
-
         merge(arr, low, mid, high);
-        System.out.println(Arrays.toString(arr));
     }
 
     private static void merge(int[] arr, int low, int mid, int high) {
-        int[] tmp = new int[high - low + 1];
-        int mark = low;
+        int[] temp = new int[high - low + 1];
+        int k = 0;
+        int i = low;
         int j = mid + 1;
-        int i = 0;
-        while (low <= mid && j <= high) {
-            if (arr[low] <= arr[j]) {
-                tmp[i++] = arr[low++];
+        while (i <= mid && j <= high) {
+            if (arr[i] <= arr[j]) temp[k++] = arr[i++];
+            else temp[k++] = arr[j++];
+        }
+        while (i <= mid)
+            temp[k++] = arr[i++];
+        while (j <= high)
+            temp[k++] = arr[j++];
+        k = 0;
+        while (k < temp.length)
+            arr[low++] = temp[k++];
+    }
+
+    /**
+     * 从数组中找出第K大的数字
+     * @param arr arr
+     * @param low low
+     * @param high high
+     * @param k K
+     * @return position
+     */
+    public static int findKMax(int[] arr, int low, int high, int k) {
+        k = arr.length - k + 1;
+        int index = partition(arr, low, high);
+        while (index != k-1) {
+            if (index > k - 1) {
+                index = partition(arr, 0, index - 1);
             } else {
-                tmp[i++] = arr[j++];
+                index = partition(arr, index + 1, high);
             }
         }
-        while (low <= mid) {
-            tmp[i++] = arr[low++];
-        }
-        while (j <= high) {
-            tmp[i++] = arr[j++];
-        }
-        int l = 0;
-        while (l < tmp.length) {
-            arr[mark++] = tmp[l++];
-        }
+        return arr[index];
     }
+
 }
