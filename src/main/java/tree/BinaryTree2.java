@@ -108,7 +108,7 @@ public class BinaryTree2 {
             if (node != null) {
                 stack.push(node);
                 node = node.left;
-            } else  {
+            } else {
                 node = stack.pop();
                 System.out.println(node.val);
                 node = node.right;
@@ -137,12 +137,13 @@ public class BinaryTree2 {
         while (node != null || !stack.isEmpty()) {
             if (node != null) {
                 stack.push(node);
-                output.push(node);
+                stack.push(node);
                 node = node.right;
             } else {
                 node = stack.pop();
                 node = node.left;
             }
+
         }
         while (!output.isEmpty()) {
             System.out.println(output.pop().val);

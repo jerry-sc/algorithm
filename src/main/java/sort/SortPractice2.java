@@ -57,29 +57,30 @@ public class SortPractice2 {
     }
 
     private static void mergingSort(int[] arr, int low, int high) {
-        if (low >= high) return;
-        int mid = low + (high - low) / 2;
-        mergingSort(arr, 0, mid);
-        mergingSort(arr, mid + 1, high);
-        merge(arr, low, mid, high);
+        if (low < high) {
+            int mid = low + (high - low) / 2;
+            mergingSort(arr, low, mid);
+            mergingSort(arr, mid + 1, high);
+            merge(arr, low, mid, high);
+        }
     }
 
     private static void merge(int[] arr, int low, int mid, int high) {
-        int[] temp = new int[high - low + 1];
+        int[] tmp = new int[high - low + 1];
+        int i = low, j = mid + 1;
         int k = 0;
-        int i = low;
-        int j = mid + 1;
         while (i <= mid && j <= high) {
-            if (arr[i] <= arr[j]) temp[k++] = arr[i++];
-            else temp[k++] = arr[j++];
+            if (arr[i] <= arr[j]) tmp[k++] = arr[i++];
+            else tmp[k++] = arr[j++];
         }
         while (i <= mid)
-            temp[k++] = arr[i++];
+            tmp[k++] = arr[i++];
         while (j <= high)
-            temp[k++] = arr[j++];
+            tmp[k++] = arr[j++];
         k = 0;
-        while (k < temp.length)
-            arr[low++] = temp[k++];
+        while (k < tmp.length) {
+            arr[low++] = tmp[k++];
+        }
     }
 
     /**
@@ -91,16 +92,15 @@ public class SortPractice2 {
      * @return position
      */
     public static int findKMax(int[] arr, int low, int high, int k) {
-        k = arr.length - k + 1;
-        int index = partition(arr, low, high);
-        while (index != k-1) {
-            if (index > k - 1) {
-                index = partition(arr, 0, index - 1);
+        int ind = partition(arr, low, high);
+        while (k != ind) {
+            if (ind < k) {
+                ind = partition(arr, ind + 1, high);
             } else {
-                index = partition(arr, index + 1, high);
+                ind = partition(arr, low, high);
             }
         }
-        return arr[index];
+        return arr[k];
     }
 
 }
