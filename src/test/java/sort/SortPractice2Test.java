@@ -57,7 +57,7 @@ public class SortPractice2Test {
 
     @Test
     public void findKMax() {
-        int a = SortPractice2.findKMax(arr, 0, arr.length - 1, 10);
+        int a = SortPractice2.findKMax(arr, 0, arr.length - 1, 1);
         System.out.println(a);
     }
 }
