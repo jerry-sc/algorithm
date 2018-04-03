@@ -2,6 +2,7 @@ package offer;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 /**
  * Created on 2018-03-23

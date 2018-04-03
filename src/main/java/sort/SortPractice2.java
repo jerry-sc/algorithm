@@ -97,7 +97,7 @@ public class SortPractice2 {
             if (ind < k) {
                 ind = partition(arr, ind + 1, high);
             } else {
-                ind = partition(arr, low, high);
+                ind = partition(arr, low, ind-1);
             }
         }
         return arr[k];
