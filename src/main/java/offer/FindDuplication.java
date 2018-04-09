@@ -14,17 +14,16 @@ public class FindDuplication {
      */
     public int getDuplication(int[] array) {
         int low = 1, high = array.length - 1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
+        while (low < high) {
+            int mid = (low + high) / 2;
             int count = countRange(array, low, mid);
-            if (low == high) {
-                if (count > 1) return low;
-                else break;
+            if (count > mid - low + 1) {
+                high = mid;
+            } else {
+                low = mid + 1;
             }
-            if (count > (mid - low + 1)) high = mid;
-            else low = mid +1;
         }
-        return -1;
+        return low;
     }
 
     private int countRange(int[] array, int low, int high) {
@@ -35,5 +34,20 @@ public class FindDuplication {
             }
         }
         return count;
+    }
+
+    public int getDuplication2(int[] array) {
+        int slow = 0;
+        int fast = 0;
+        do {
+            slow = array[slow];
+            fast = array[array[fast]];
+        } while (slow != fast);
+        fast = 0;
+        while (fast != slow) {
+            fast = array[fast];
+            slow = array[slow];
+        }
+        return fast;
     }
 }

@@ -2,8 +2,6 @@ package offer;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created on 2018-04-01
  *

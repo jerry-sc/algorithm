@@ -7,24 +7,29 @@ import java.util.Scanner;
  */
 public class Main9 {
 
-    private static int res = 0;
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int[] arr = {1,5,10,20,50,100};
-        helper(arr, 0, n);
-        System.out.println(res);
+        long[][] map = new long[arr.length][n+1];
+        System.out.println(helper(arr, map, 0, n));
     }
 
-    private static void helper(int[] arr, int index, int target) {
-        if (target == 0) {
-            ++res;
+    private static long helper(int[] arr, long[][] map, int index, int target) {
+        long res = 0;
+        if (index == arr.length) {
+            res += target == 0 ? 1 : 0;
         } else {
-            for (int i = index; i < arr.length; ++i) {
-                helper(arr, i , target - arr[i]);
-                helper(arr, i + 1, target);
+            for (int i = 0; target - arr[index] * i >= 0; ++i) {
+                long value = map[index+1][target-arr[index] * i];
+                if (value != 0) {
+                    res += value == -1 ? 0 : value;
+                } else {
+                    res += helper(arr, map, index + 1, target - arr[index] * i);
+                }
             }
         }
+        map[index][target] = res == 0 ? -1 : res;
+        return res;
     }
 }

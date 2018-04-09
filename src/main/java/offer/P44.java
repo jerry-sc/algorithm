@@ -7,40 +7,28 @@ package offer;
  */
 public class P44 {
 
-    public int digitIndex(int index) {
-        if (index < 0) return -1;
-        int digits = 1;
+    public int digitAtIndex(int index) {
+        int digit = 1;
         while (true) {
-            int numbers = countOfIntegers(digits);
-            if (index < numbers * digits) {
-                return digitIndex(index, digits);
-            }
-            index -= numbers*digits;
-            ++digits;
+            int numbers = countOfIntegers(digit);
+            if (index < numbers) return get(index, digit);
+            index -= numbers * digit;
+            ++digit;
         }
     }
 
-    private int digitIndex(int index, int digits) {
-        int num = beginNum(digits) + index / digits;
-        int indexFromRight = digits - index % digits;
-        for (int i = 0; i < indexFromRight;++i) {
-            num /= 10;
+    private int get(int index, int digit) {
+        int first = digit == 1 ? 0 : (int) Math.pow(10, digit-1);
+        int number = first + index / digit;
+        int indexFromRight = digit - index % digit;
+        for (int i = 1; i < indexFromRight; ++i) {
+            number /= 10;
         }
-        return num % 10;
+        return number % 10;
     }
 
-    private int beginNum(int digits) {
-        if (digits == 1) return 0;
-        return (int) Math.pow(10, digits - 1);
-    }
-
-    /**
-     * 计算M位的数字共有多少个
-     * @param digits
-     * @return
-     */
     private int countOfIntegers(int digits) {
         if (digits == 1) return 10;
-        return (int) (9 * Math.pow(10, digits - 1));
+        return 9 * (int)Math.pow(10, digits - 1);
     }
 }
